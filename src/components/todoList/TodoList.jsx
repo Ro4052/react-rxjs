@@ -8,7 +8,10 @@ import TextInput from "../textInput/TextInput";
 const TodoList = ({ todos, onSubmitTodo }) => (
   <>
     <List bulleted>
-      {todos && todos.map((todo, i) => <List.Item key={i}> {todo} </List.Item>)}
+      {todos &&
+        todos.map((todo, i) => (
+          <List.Item key={todo.id}> {todo.text} </List.Item>
+        ))}
     </List>
     <TextInput
       action="Create"
