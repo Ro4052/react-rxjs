@@ -1,53 +1,25 @@
-import React, { Component } from "react";
-import { List, Input } from "semantic-ui-react";
+import React from "react";
+import { BehaviorSubject } from "rxjs";
+import { List } from "semantic-ui-react";
 
-class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputText: ""
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+import withObservableStream from "../withObservableStream/WithObservableStream";
+import TextInput from "../textInput/TextInput";
 
-  handleChange(event) {
-    const text = event.target.value;
-    if (text.length > 0 && text.length <= 25) {
-      this.setState({
-        inputText: text
-      });
-    }
-  }
+const TodoList = ({ todos, onSubmitTodo }) => (
+  <>
+    <List bulleted>
+      {todos && todos.map((todo, i) => <List.Item key={i}> {todo} </List.Item>)}
+    </List>
+    <TextInput
+      action="Create"
+      placeholder="Type here..."
+      submit={onSubmitTodo}
+    />
+  </>
+);
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.setState({
-      inputText: ""
-    });
-    console.log(this.state.inputText);
-  }
+const todos$ = new BehaviorSubject({ todos: [] });
 
-  render() {
-    return (
-      <>
-        <List bulleted>
-          {this.state.todos &&
-            this.state.todos.map(todo => (
-              <List.Item key={todo.id}> {todo.description} </List.Item>
-            ))}
-        </List>
-        <form onSubmit={this.handleSubmit}>
-          <Input
-            action="Create"
-            placeholder="Type here..."
-            value={this.state.inputText}
-            onChange={this.handleChange}
-          />
-        </form>
-      </>
-    );
-  }
-}
-
-export default TodoList;
+export default withObservableStream(todos$, {
+  onSubmitTodo: todo => todos$.next({ todos: [...todos$.value.todos, todo] })
+})(TodoList);
