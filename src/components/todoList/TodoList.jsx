@@ -1,8 +1,8 @@
 import React from "react";
-import { BehaviorSubject } from "rxjs";
 import { List } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
+import * as todoService from "../../services/todoService";
 import TextInput from "../textInput/TextInput";
 
 const TodoList = ({ todos, onSubmitTodo }) => (
@@ -18,8 +18,6 @@ const TodoList = ({ todos, onSubmitTodo }) => (
   </>
 );
 
-const todos$ = new BehaviorSubject({ todos: [] });
-
-export default withObservableStream(todos$, {
-  onSubmitTodo: todo => todos$.next({ todos: [...todos$.value.todos, todo] })
+export default withObservableStream(todoService.getTodoStream(), {
+  onSubmitTodo: todoService.onTodoSubmit
 })(TodoList);
