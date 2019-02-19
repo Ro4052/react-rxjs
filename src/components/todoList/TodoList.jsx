@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Icon } from "semantic-ui-react";
+import { List, Popup, Icon } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
 import * as todoService from "../../services/todoService";
@@ -21,12 +21,18 @@ const TodoList = props => (
       ))}
       {props.todos.filter(todo => todo.complete).length > 0 && (
         <List.Item>
-          <Icon
-            link
-            className={styles.deleteCompleted}
-            name="trash alternate"
-            color="red"
-            onClick={props.onDeleteCompleted}
+          <Popup
+            position="left center"
+            trigger={
+              <Icon
+                link
+                className={styles.deleteCompleted}
+                name="trash alternate"
+                color="red"
+                onClick={props.onDeleteCompleted}
+              />
+            }
+            content="Delete Completed"
           />
         </List.Item>
       )}
