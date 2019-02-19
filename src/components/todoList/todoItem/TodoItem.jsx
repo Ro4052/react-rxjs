@@ -13,10 +13,22 @@ class TodoItem extends Component {
     };
     this.setEditMode = this.setEditMode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.pageClick = this.pageClick.bind(this);
+  }
+
+  pageClick(event) {
+    if (!event.path.includes(this.textInput)) {
+      this.setEditMode(false);
+    }
   }
 
   setEditMode(editMode) {
     this.setState({ editMode });
+    if (editMode) {
+      document.addEventListener("click", this.pageClick);
+    } else {
+      document.removeEventListener("click", this.pageClick);
+    }
   }
 
   handleSubmit(newText) {
@@ -26,11 +38,13 @@ class TodoItem extends Component {
 
   render() {
     const content = this.state.editMode ? (
-      <TextInput
-        placeholder="Type here..."
-        initialText={this.props.todo.text}
-        submit={this.handleSubmit}
-      />
+      <div ref={el => (this.textInput = el)}>
+        <TextInput
+          placeholder="Type here..."
+          initialText={this.props.todo.text}
+          submit={this.handleSubmit}
+        />
+      </div>
     ) : (
       <>
         <span
