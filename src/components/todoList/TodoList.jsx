@@ -6,12 +6,17 @@ import * as todoService from "../../services/todoService";
 import TodoItem from "./todoItem/TodoItem";
 import TextInput from "../textInput/TextInput";
 
-const TodoList = ({ todos, onSubmitTodo, onDeleteTodo }) => (
+const TodoList = ({ todos, onSubmitTodo, onDeleteTodo, onToggleComplete }) => (
   <>
     <List relaxed>
       {todos &&
         todos.map(todo => (
-          <TodoItem key={todo.id} todo={todo} delete={onDeleteTodo} />
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            delete={onDeleteTodo}
+            toggleComplete={() => onToggleComplete(todo.id)}
+          />
         ))}
     </List>
     <TextInput
@@ -24,5 +29,6 @@ const TodoList = ({ todos, onSubmitTodo, onDeleteTodo }) => (
 
 export default withObservableStream(todoService.getTodoStream(), {
   onSubmitTodo: todoService.onSubmitTodo,
-  onDeleteTodo: todoService.onDeleteTodo
+  onDeleteTodo: todoService.onDeleteTodo,
+  onToggleComplete: todoService.onToggleComplete
 })(TodoList);
