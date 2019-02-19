@@ -24,6 +24,13 @@ export const onDeleteTodo = todoId => {
   updateLocalStorage();
 };
 
+export const onDeleteCompleted = () => {
+  todos$.next({
+    todos: todos$.value.todos.filter(todo => !todo.complete)
+  });
+  updateLocalStorage();
+};
+
 export const onToggleComplete = todoId => {
   const todos = [...todos$.value.todos];
   const toggleTodo = todos.find(todo => todo.id === todoId);

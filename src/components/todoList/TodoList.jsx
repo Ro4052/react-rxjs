@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "semantic-ui-react";
+import { List, Icon } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
 import * as todoService from "../../services/todoService";
@@ -18,6 +18,17 @@ const TodoList = props => (
           toggleComplete={() => props.onToggleComplete(todo.id)}
         />
       ))}
+      {props.todos.filter(todo => todo.complete).length > 0 && (
+        <List.Item>
+          <Icon
+            link
+            className={styles.deleteCompleted}
+            name="trash alternate"
+            color="red"
+            onClick={props.onDeleteCompleted}
+          />
+        </List.Item>
+      )}
     </List>
     <TextInput
       action="Create"
@@ -30,5 +41,6 @@ const TodoList = props => (
 export default withObservableStream(todoService.getTodoStream(), {
   onSubmitTodo: todoService.onSubmitTodo,
   onDeleteTodo: todoService.onDeleteTodo,
-  onToggleComplete: todoService.onToggleComplete
+  onToggleComplete: todoService.onToggleComplete,
+  onDeleteCompleted: todoService.onDeleteCompleted
 })(TodoList);
