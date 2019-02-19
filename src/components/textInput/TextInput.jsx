@@ -13,7 +13,7 @@ class TextInput extends Component {
 
   handleChange(event) {
     const text = event.target.value;
-    if (text.length > 0 && text.length <= 25) {
+    if (text.length <= 25) {
       this.setState({
         inputText: text
       });
@@ -22,10 +22,12 @@ class TextInput extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.submit(this.state.inputText);
-    this.setState({
-      inputText: ""
-    });
+    if (this.state.inputText.length > 0) {
+      this.props.submit(this.state.inputText);
+      this.setState({
+        inputText: ""
+      });
+    }
   }
 
   render() {
