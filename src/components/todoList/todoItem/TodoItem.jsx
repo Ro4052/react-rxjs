@@ -1,12 +1,13 @@
 import React from "react";
 import { List, Icon } from "semantic-ui-react";
+import cx from "classnames";
 
 import styles from "./TodoItem.module.css";
 
 export default props => {
   const content = (
     <>
-      <span className={props.todo.complete && styles.completedTodo}>
+      <span className={cx({ [styles.completedTodo]: props.todo.complete })}>
         {props.todo.text}&nbsp;
       </span>
       <Icon
