@@ -31,13 +31,21 @@ export const onDeleteCompleted = () => {
   updateLocalStorage();
 };
 
+export const onEditTodoText = (todoId, todoText) => {
+  updateTodo(todoId, todo => (todo.text = todoText));
+};
+
 export const onToggleComplete = todoId => {
+  updateTodo(todoId, todo => (todo.complete = !todo.complete));
+};
+
+function updateTodo(todoId, callback) {
   const todos = [...todos$.value.todos];
   const toggleTodo = todos.find(todo => todo.id === todoId);
-  toggleTodo.complete = !toggleTodo.complete;
+  callback(toggleTodo);
   todos$.next({ todos: todos });
   updateLocalStorage();
-};
+}
 
 function updateLocalStorage() {
   localStorage.setItem("nextId", nextId);

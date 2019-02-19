@@ -1,3 +1,7 @@
+.todoSpan {
+  cursor: pointer;
+}
+
 .completedTodo {
   color: rgba(0, 0, 0, 0.3);
 }

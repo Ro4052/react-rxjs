@@ -16,6 +16,7 @@ const TodoList = props => (
           todo={todo}
           delete={props.onDeleteTodo}
           toggleComplete={() => props.onToggleComplete(todo.id)}
+          editText={props.onEditTodoText}
         />
       ))}
       {props.todos.filter(todo => todo.complete).length > 0 && (
@@ -42,5 +43,6 @@ export default withObservableStream(todoService.getTodoStream(), {
   onSubmitTodo: todoService.onSubmitTodo,
   onDeleteTodo: todoService.onDeleteTodo,
   onToggleComplete: todoService.onToggleComplete,
-  onDeleteCompleted: todoService.onDeleteCompleted
+  onDeleteCompleted: todoService.onDeleteCompleted,
+  onEditTodoText: todoService.onEditTodoText
 })(TodoList);

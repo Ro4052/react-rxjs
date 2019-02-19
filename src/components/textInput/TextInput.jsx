@@ -5,7 +5,7 @@ class TextInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputText: ""
+      inputText: this.props.initialText || ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
