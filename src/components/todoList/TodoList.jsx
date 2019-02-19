@@ -5,10 +5,11 @@ import withObservableStream from "../withObservableStream/WithObservableStream";
 import * as todoService from "../../services/todoService";
 import TodoItem from "./todoItem/TodoItem";
 import TextInput from "../textInput/TextInput";
+import styles from "./TodoList.module.css";
 
 const TodoList = props => (
   <>
-    <List relaxed>
+    <List divided relaxed className={styles.list}>
       {props.todos.map(todo => (
         <TodoItem
           key={todo.id}
