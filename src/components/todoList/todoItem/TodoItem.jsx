@@ -12,6 +12,7 @@ class TodoItem extends Component {
     this.setEditMode = this.setEditMode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.pageClick = this.pageClick.bind(this);
+    this.detectEscape = this.detectEscape.bind(this);
   }
 
   setTextInput(el) {
@@ -24,12 +25,20 @@ class TodoItem extends Component {
     }
   }
 
+  detectEscape(event) {
+    if (event.keyCode === 27) {
+      this.setEditMode(false);
+    }
+  }
+
   setEditMode(editMode) {
     this.setState({ editMode });
     if (editMode) {
       document.addEventListener("click", this.pageClick);
+      document.addEventListener("keydown", this.detectEscape);
     } else {
       document.removeEventListener("click", this.pageClick);
+      document.removeEventListener("keydown", this.detectEscape);
     }
   }
 
