@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 
-export default (observable, triggers) => Component => {
-  return class extends React.Component {
+export default (observable, triggers) => WrappedComponent => {
+  return class extends Component {
     componentWillMount() {
       this.subscription = observable.subscribe(newState =>
         this.setState({ ...newState })
@@ -13,7 +13,7 @@ export default (observable, triggers) => Component => {
     }
 
     render() {
-      return <Component {...this.props} {...this.state} {...triggers} />;
+      return <WrappedComponent {...this.props} {...this.state} {...triggers} />;
     }
   };
 };
