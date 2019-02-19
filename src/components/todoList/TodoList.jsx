@@ -7,10 +7,14 @@ import TextInput from "../textInput/TextInput";
 
 const TodoList = ({ todos, onSubmitTodo }) => (
   <>
-    <List bulleted>
+    <List relaxed>
       {todos &&
-        todos.map((todo, i) => (
-          <List.Item key={todo.id}> {todo.text} </List.Item>
+        todos.map(todo => (
+          <List.Item
+            key={todo.id}
+            icon="sticky note outline"
+            content={todo.text}
+          />
         ))}
     </List>
     <TextInput
