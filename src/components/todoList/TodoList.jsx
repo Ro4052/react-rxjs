@@ -3,18 +3,15 @@ import { List } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
 import * as todoService from "../../services/todoService";
+import TodoItem from "./todoItem/TodoItem";
 import TextInput from "../textInput/TextInput";
 
-const TodoList = ({ todos, onSubmitTodo }) => (
+const TodoList = ({ todos, onSubmitTodo, onDeleteTodo }) => (
   <>
     <List relaxed>
       {todos &&
         todos.map(todo => (
-          <List.Item
-            key={todo.id}
-            icon="sticky note outline"
-            content={todo.text}
-          />
+          <TodoItem key={todo.id} todo={todo} delete={onDeleteTodo} />
         ))}
     </List>
     <TextInput
@@ -26,5 +23,6 @@ const TodoList = ({ todos, onSubmitTodo }) => (
 );
 
 export default withObservableStream(todoService.getTodoStream(), {
-  onSubmitTodo: todoService.onTodoSubmit
+  onSubmitTodo: todoService.onSubmitTodo,
+  onDeleteTodo: todoService.onDeleteTodo
 })(TodoList);
