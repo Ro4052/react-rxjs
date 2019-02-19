@@ -15,7 +15,7 @@ const TodoList = props => (
           key={todo.id}
           todo={todo}
           delete={props.onDeleteTodo}
-          toggleComplete={() => props.onToggleComplete(todo.id)}
+          toggleComplete={props.onToggleComplete}
           editText={props.onEditTodoText}
         />
       ))}
