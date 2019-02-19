@@ -1,65 +1,48 @@
-import React, { Component } from "react";
+import React, { useState, useRef } from "react";
 
 import TodoItemDisp from "../todoItemDisp/TodoItemDisp";
 
-class TodoItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editMode: false
-    };
-    this.setTextInput = this.setTextInput.bind(this);
-    this.setEditMode = this.setEditMode.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.pageClick = this.pageClick.bind(this);
-    this.detectEscape = this.detectEscape.bind(this);
-  }
+export default props => {
+  const [editMode, _setEditMode] = useState(false);
+  let textInput = useRef(null);
 
-  setTextInput(el) {
-    this.textInput = el;
-  }
-
-  pageClick(event) {
-    if (!event.path.includes(this.textInput)) {
-      this.setEditMode(false);
+  function pageClick(event) {
+    if (!event.path.includes(textInput.current)) {
+      setEditMode(false);
     }
   }
 
-  detectEscape(event) {
+  function detectEscape(event) {
     if (event.keyCode === 27) {
-      this.setEditMode(false);
+      setEditMode(false);
     }
   }
 
-  setEditMode(editMode) {
-    this.setState({ editMode });
-    if (editMode) {
-      document.addEventListener("click", this.pageClick);
-      document.addEventListener("keydown", this.detectEscape);
+  function setEditMode(edit) {
+    _setEditMode(edit);
+    if (edit) {
+      document.addEventListener("click", pageClick);
+      document.addEventListener("keydown", detectEscape);
     } else {
-      document.removeEventListener("click", this.pageClick);
-      document.removeEventListener("keydown", this.detectEscape);
+      document.removeEventListener("click", pageClick);
+      document.removeEventListener("keydown", detectEscape);
     }
   }
 
-  handleSubmit(newText) {
-    this.setEditMode(false);
-    this.props.editText(this.props.todo.id, newText);
+  function handleSubmit(newText) {
+    setEditMode(false);
+    props.editText(props.todo.id, newText);
   }
 
-  render() {
-    return (
-      <TodoItemDisp
-        todo={this.props.todo}
-        editMode={this.state.editMode}
-        setTextInput={this.setTextInput}
-        setEditMode={this.setEditMode}
-        delete={this.props.delete}
-        toggleComplete={this.props.toggleComplete}
-        onSubmit={this.props.handleSubmit}
-      />
-    );
-  }
-}
-
-export default TodoItem;
+  return (
+    <TodoItemDisp
+      todo={props.todo}
+      editMode={editMode}
+      textInput={textInput}
+      setEditMode={setEditMode}
+      delete={props.delete}
+      toggleComplete={props.toggleComplete}
+      onSubmit={handleSubmit}
+    />
+  );
+};

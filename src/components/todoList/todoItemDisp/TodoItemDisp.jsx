@@ -7,7 +7,7 @@ import styles from "./TodoItemDisp.module.css";
 
 export default props => {
   const content = props.editMode ? (
-    <div ref={props.setTextInput}>
+    <div ref={props.textInput}>
       <TextInput
         placeholder="Type here..."
         initialText={props.todo.text}

@@ -1,19 +1,16 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-export default (observable, triggers) => WrappedComponent => {
-  return class extends Component {
-    componentWillMount() {
-      this.subscription = observable.subscribe(newState =>
-        this.setState({ ...newState })
-      );
-    }
+export default (observable, triggers) => WrappedComponent => props => {
+  const [parentState, setParentState] = useState({});
 
-    componentWillUnmount() {
-      this.subscription.unsubscribe();
-    }
+  useEffect(() => {
+    const subscription = observable.subscribe(newState =>
+      setParentState(newState)
+    );
+    return () => {
+      subscription.unsubscribe();
+    };
+  });
 
-    render() {
-      return <WrappedComponent {...this.props} {...this.state} {...triggers} />;
-    }
-  };
+  return <WrappedComponent {...props} {...parentState} {...triggers} />;
 };
