@@ -2,7 +2,7 @@ import React from "react";
 
 export default (observable, triggers) => Component => {
   return class extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
       this.subscription = observable.subscribe(newState =>
         this.setState({ ...newState })
       );

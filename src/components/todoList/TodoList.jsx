@@ -6,23 +6,22 @@ import * as todoService from "../../services/todoService";
 import TodoItem from "./todoItem/TodoItem";
 import TextInput from "../textInput/TextInput";
 
-const TodoList = ({ todos, onSubmitTodo, onDeleteTodo, onToggleComplete }) => (
+const TodoList = props => (
   <>
     <List relaxed>
-      {todos &&
-        todos.map(todo => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            delete={onDeleteTodo}
-            toggleComplete={() => onToggleComplete(todo.id)}
-          />
-        ))}
+      {props.todos.map(todo => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          delete={props.onDeleteTodo}
+          toggleComplete={() => props.onToggleComplete(todo.id)}
+        />
+      ))}
     </List>
     <TextInput
       action="Create"
       placeholder="Type here..."
-      submit={onSubmitTodo}
+      submit={props.onSubmitTodo}
     />
   </>
 );
