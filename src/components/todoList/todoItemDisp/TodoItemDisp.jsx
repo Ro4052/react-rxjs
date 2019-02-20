@@ -1,18 +1,20 @@
-import React, { memo } from "react";
-import { List, Icon } from "semantic-ui-react";
+import React, { memo, lazy, Suspense } from "react";
+import { List, Icon, Loader } from "semantic-ui-react";
 import cx from "classnames";
 
-import TextInput from "../../textInput/TextInput";
 import styles from "./TodoItemDisp.module.css";
+const TextInput = lazy(() => import("../../textInput/TextInput"));
 
 export default memo(props => {
   const content = props.editMode ? (
     <div ref={props.textInput}>
-      <TextInput
-        placeholder="Type here..."
-        initialText={props.todo.text}
-        submit={props.onSubmit}
-      />
+      <Suspense fallback={<Loader />}>
+        <TextInput
+          placeholder="Type here..."
+          initialText={props.todo.text}
+          submit={props.onSubmit}
+        />
+      </Suspense>
     </div>
   ) : (
     <>
