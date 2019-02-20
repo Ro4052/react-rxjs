@@ -9,36 +9,34 @@ import styles from "./TodoList.module.css";
 
 const TodoList = props => (
   <>
-    {props.todos && (
-      <List divided relaxed className={styles.list}>
-        {props.todos.map(todo => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            delete={props.onDeleteTodo}
-            toggleComplete={props.onToggleComplete}
-            editText={props.onEditTodoText}
+    <List divided relaxed className={styles.list}>
+      {props.todos.map(todo => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          delete={props.onDeleteTodo}
+          toggleComplete={props.onToggleComplete}
+          editText={props.onEditTodoText}
+        />
+      ))}
+      {props.todos.filter(todo => todo.complete).length > 0 && (
+        <List.Item>
+          <Popup
+            position="left center"
+            trigger={
+              <Icon
+                link
+                className={styles.deleteCompleted}
+                name="trash alternate"
+                color="red"
+                onClick={props.onDeleteCompleted}
+              />
+            }
+            content="Delete Completed"
           />
-        ))}
-        {props.todos.filter(todo => todo.complete).length > 0 && (
-          <List.Item>
-            <Popup
-              position="left center"
-              trigger={
-                <Icon
-                  link
-                  className={styles.deleteCompleted}
-                  name="trash alternate"
-                  color="red"
-                  onClick={props.onDeleteCompleted}
-                />
-              }
-              content="Delete Completed"
-            />
-          </List.Item>
-        )}
-      </List>
-    )}
+        </List.Item>
+      )}
+    </List>
     <TextInput
       action="Create"
       placeholder="Type here..."
@@ -47,7 +45,9 @@ const TodoList = props => (
   </>
 );
 
-export default withObservableStream(todoService.getTodoStream(), {
+const stateMap = state => ({ todos: state.todos || [] });
+
+export default withObservableStream(todoService.getTodoStream(), stateMap, {
   onSubmitTodo: todoService.onSubmitTodo,
   onDeleteTodo: todoService.onDeleteTodo,
   onToggleComplete: todoService.onToggleComplete,
