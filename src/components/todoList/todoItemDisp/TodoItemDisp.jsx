@@ -21,20 +21,20 @@ export default memo(props => {
       <span className={styles.todoSpan} onClick={() => props.setEditMode(true)}>
         {props.todo.text}
       </span>
-      <Icon
-        link
-        className={styles.actionIcon}
-        name="close"
-        color="red"
-        onClick={() => props.delete(props.todo.id)}
-      />
-      <Icon
-        link
-        className={styles.actionIcon}
-        name={props.todo.complete ? "undo alternate" : "check circle"}
-        color={props.todo.complete ? "red" : "green"}
-        onClick={() => props.toggleComplete(props.todo.id)}
-      />
+      <div className={styles.actionIcons}>
+        <Icon
+          link
+          name={props.todo.complete ? "undo alternate" : "check circle"}
+          color={props.todo.complete ? "red" : "green"}
+          onClick={() => props.toggleComplete(props.todo.id)}
+        />
+        <Icon
+          link
+          name="close"
+          color="red"
+          onClick={() => props.delete(props.todo.id)}
+        />
+      </div>
     </>
   );
   return (
