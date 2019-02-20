@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { List, Icon } from "semantic-ui-react";
 import cx from "classnames";
 
 import TextInput from "../../textInput/TextInput";
 import styles from "./TodoItemDisp.module.css";
 
-export default props => {
+export default memo(props => {
   const content = props.editMode ? (
     <div ref={props.textInput}>
       <TextInput
@@ -17,8 +17,7 @@ export default props => {
   ) : (
     <>
       <span className={styles.todoSpan} onClick={() => props.setEditMode(true)}>
-        {" "}
-        {props.todo.text}{" "}
+        {props.todo.text}
       </span>
       <Icon
         link
@@ -48,4 +47,4 @@ export default props => {
       content={content}
     />
   );
-};
+});
