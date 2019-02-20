@@ -1,16 +1,18 @@
 import { BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 
 let nextId = localStorage.getItem("nextId") || 0;
-const todos$ = new BehaviorSubject({
+const _todos$ = new BehaviorSubject({
   todos: JSON.parse(localStorage.getItem("todos"))
 });
+const todos$ = _todos$.pipe(map(state => Object.freeze(state)));
 
 export const getTodoStream = () => todos$;
 
 export const onSubmitTodo = todoText => {
-  todos$.next({
+  _todos$.next({
     todos: [
-      ...todos$.value.todos,
+      ..._todos$.value.todos,
       { id: nextId++, text: todoText, complete: false }
     ]
   });
@@ -18,15 +20,15 @@ export const onSubmitTodo = todoText => {
 };
 
 export const onDeleteTodo = todoId => {
-  todos$.next({
-    todos: todos$.value.todos.filter(todo => todo.id !== todoId)
+  _todos$.next({
+    todos: _todos$.value.todos.filter(todo => todo.id !== todoId)
   });
   updateLocalStorage();
 };
 
 export const onDeleteCompleted = () => {
-  todos$.next({
-    todos: todos$.value.todos.filter(todo => !todo.complete)
+  _todos$.next({
+    todos: _todos$.value.todos.filter(todo => !todo.complete)
   });
   updateLocalStorage();
 };
@@ -40,14 +42,14 @@ export const onToggleComplete = todoId => {
 };
 
 function updateTodo(todoId, callback) {
-  const todos = [...todos$.value.todos];
+  const todos = [..._todos$.value.todos];
   const toggleTodo = todos.find(todo => todo.id === todoId);
   callback(toggleTodo);
-  todos$.next({ todos: todos });
+  _todos$.next({ todos: todos });
   updateLocalStorage();
 }
 
 function updateLocalStorage() {
   localStorage.setItem("nextId", nextId);
-  localStorage.setItem("todos", JSON.stringify(todos$.value.todos));
+  localStorage.setItem("todos", JSON.stringify(_todos$.value.todos));
 }
