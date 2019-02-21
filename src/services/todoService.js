@@ -43,8 +43,10 @@ export const onToggleComplete = todoId => {
 
 function updateTodo(todoId, callback) {
   const todos = [..._todos$.value.todos];
-  const toggleTodo = todos.find(todo => todo.id === todoId);
-  callback(toggleTodo);
+  const todoIndex = todos.findIndex(todo => todo.id === todoId);
+  const updatedTodo = { ...todos[todoIndex] };
+  callback(updatedTodo);
+  todos[todoIndex] = updatedTodo;
   _todos$.next({ todos: todos });
   updateLocalStorage();
 }
