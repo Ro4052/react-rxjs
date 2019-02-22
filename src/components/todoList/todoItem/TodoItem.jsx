@@ -36,9 +36,9 @@ export default memo(props => {
 
   return (
     <TodoItemDisp
+      ref={textInput}
       todo={props.todo}
       editMode={editMode}
-      textInput={textInput}
       setEditMode={setEditMode}
       delete={props.delete}
       toggleComplete={props.toggleComplete}

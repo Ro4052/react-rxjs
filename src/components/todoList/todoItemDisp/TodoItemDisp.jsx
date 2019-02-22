@@ -1,13 +1,13 @@
-import React, { memo, lazy, Suspense } from "react";
+import React, { forwardRef, lazy, Suspense } from "react";
 import { List, Icon, Loader } from "semantic-ui-react";
 import cx from "classnames";
 
 import styles from "./TodoItemDisp.module.css";
 const TextInput = lazy(() => import("../../textInput/TextInput"));
 
-export default memo(props => {
+export default forwardRef((props, textInput) => {
   const content = props.editMode ? (
-    <div ref={props.textInput}>
+    <div ref={textInput}>
       <Suspense fallback={<Loader />}>
         <TextInput
           placeholder="Type here..."
