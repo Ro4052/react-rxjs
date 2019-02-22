@@ -12,7 +12,7 @@ export default memo(
         <Suspense fallback={<Loader />}>
           <TextInput
             placeholder="Type here..."
-            initialText={props.todo.text}
+            initialText={props.todo.get("text")}
             submit={props.onSubmit}
           />
         </Suspense>
@@ -23,31 +23,33 @@ export default memo(
           className={styles.todoSpan}
           onClick={() => props.setEditMode(true)}
         >
-          {props.todo.text}
+          {props.todo.get("text")}
         </span>
         <div className={styles.actionIcons}>
           <Icon
             link
-            name={props.todo.complete ? "undo alternate" : "check circle"}
-            color={props.todo.complete ? "red" : "green"}
-            onClick={() => props.toggleComplete(props.todo.id)}
+            name={
+              props.todo.get("complete") ? "undo alternate" : "check circle"
+            }
+            color={props.todo.get("complete") ? "red" : "green"}
+            onClick={() => props.toggleComplete(props.todo.get("id"))}
           />
           <Icon
             link
             name="close"
             color="red"
-            onClick={() => props.delete(props.todo.id)}
+            onClick={() => props.delete(props.todo.get("id"))}
           />
         </div>
       </>
     );
     return (
       <List.Item
-        className={cx({ [styles.completedTodo]: props.todo.complete })}
+        className={cx({ [styles.completedTodo]: props.todo.get("complete") })}
         icon={
           <Icon
             name="sticky note outline"
-            color={props.todo.complete ? "green" : "black"}
+            color={props.todo.get("complete") ? "green" : "black"}
           />
         }
         content={content}

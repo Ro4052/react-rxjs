@@ -1,4 +1,5 @@
 import React from "react";
+import { List as ImmutableList } from "immutable";
 import { List, Popup, Icon } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
@@ -12,14 +13,14 @@ const TodoList = props => (
     <List divided relaxed className={styles.list}>
       {props.todos.map(todo => (
         <TodoItem
-          key={todo.id}
+          key={todo.get("id")}
           todo={todo}
           delete={props.onDeleteTodo}
           toggleComplete={props.onToggleComplete}
           editText={props.onEditTodoText}
         />
       ))}
-      {props.todos.filter(todo => todo.complete).length > 0 && (
+      {props.todos.filter(todo => todo.get("complete")).length > 0 && (
         <List.Item>
           <Popup
             position="left center"
@@ -45,7 +46,7 @@ const TodoList = props => (
   </>
 );
 
-const stateMap = state => ({ todos: state.todos || [] });
+const stateMap = state => ({ todos: state.todos || ImmutableList([]) });
 
 export default withObservableStream(todoService.getTodoStream(), stateMap, {
   onSubmitTodo: todoService.onSubmitTodo,

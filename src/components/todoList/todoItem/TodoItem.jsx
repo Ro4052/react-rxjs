@@ -31,7 +31,7 @@ export default memo(props => {
 
   function handleSubmit(newText) {
     setEditMode(false);
-    props.editText(props.todo.id, newText);
+    props.editText(props.todo.get("id"), newText);
   }
 
   return (
