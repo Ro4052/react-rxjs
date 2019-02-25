@@ -4,28 +4,28 @@ import TodoItemDisp from "../todoItemDisp/TodoItemDisp";
 
 export default memo(props => {
   const [editMode, _setEditMode] = useState(false);
-  let textInput = useRef(null);
+  const textInput = useRef(null);
 
-  function pageClick(event) {
-    if (!event.path.includes(textInput.current)) {
+  const pageClick = useRef(event => {
+    if (!textInput.current.contains(event.target)) {
       setEditMode(false);
     }
-  }
+  });
 
-  function detectEscape(event) {
+  const detectEscape = useRef(event => {
     if (event.keyCode === 27) {
       setEditMode(false);
     }
-  }
+  });
 
   function setEditMode(edit) {
     _setEditMode(edit);
     if (edit) {
-      document.addEventListener("click", pageClick);
-      document.addEventListener("keydown", detectEscape);
+      document.addEventListener("click", pageClick.current);
+      document.addEventListener("keydown", detectEscape.current);
     } else {
-      document.removeEventListener("click", pageClick);
-      document.removeEventListener("keydown", detectEscape);
+      document.removeEventListener("click", pageClick.current);
+      document.removeEventListener("keydown", detectEscape.current);
     }
   }
 
