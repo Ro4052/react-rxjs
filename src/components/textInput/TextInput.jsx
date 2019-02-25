@@ -22,6 +22,7 @@ export default props => {
   return (
     <form onSubmit={handleSubmit}>
       <Input
+        fluid
         action={props.action}
         placeholder={props.placeholder}
         value={inputText}
