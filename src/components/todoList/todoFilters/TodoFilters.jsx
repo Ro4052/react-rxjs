@@ -6,9 +6,9 @@ import * as todoService from "../../../services/todoService";
 
 const TodoFilters = props => {
   const options = [
-    { text: "All", value: "all" },
-    { text: "Active", value: "active" },
-    { text: "Completed", value: "completed" }
+    { text: "All", value: "all", icon: "tasks" },
+    { text: "Active", value: "active", icon: "edit outline" },
+    { text: "Completed", value: "completed", icon: "check circle" }
   ];
   return (
     <Dropdown
