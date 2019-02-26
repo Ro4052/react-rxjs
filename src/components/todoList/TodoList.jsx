@@ -4,12 +4,14 @@ import { List, Popup, Icon } from "semantic-ui-react";
 
 import withObservableStream from "../withObservableStream/WithObservableStream";
 import * as todoService from "../../services/todoService";
+import TodoFilters from "./todoFilters/TodoFilters";
 import TodoItem from "./todoItem/TodoItem";
 import TextInput from "../textInput/TextInput";
 import styles from "./TodoList.module.css";
 
 const TodoList = props => (
   <>
+    <TodoFilters />
     <List divided relaxed className={styles.list}>
       {props.todos.map(todo => (
         <TodoItem

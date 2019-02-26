@@ -5,11 +5,11 @@ export default (
   stateMap,
   triggers
 ) => WrappedComponent => props => {
-  const [state, setState] = useState(stateMap({}));
+  const [state, setState] = useState(stateMap ? stateMap({}) : {});
 
   useEffect(() => {
     const subscription = observable.subscribe(newState =>
-      setState(stateMap(newState))
+      setState(stateMap ? stateMap(newState) : newState)
     );
     return () => {
       subscription.unsubscribe();

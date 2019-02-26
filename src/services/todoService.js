@@ -70,6 +70,9 @@ export const onToggleComplete = todoId => {
   updateTodo(todoId, todo => todo.update("complete", complete => !complete));
 };
 
+export const onChangeFilter = newState =>
+  (currentState = filterStates.get(newState));
+
 function updateTodo(todoId, callback) {
   const todos = _todos$.value.todos;
   const updatedTodos = todos.update(
