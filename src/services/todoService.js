@@ -57,7 +57,7 @@ export const onDeleteTodo = todoId => {
 
 export const onDeleteCompleted = () => {
   _todos$.next({
-    todos: _todos$.value.todos.filter(todo => !todo.complete)
+    todos: _todos$.value.todos.filter(todo => !todo.get("complete"))
   });
   updateLocalStorage();
 };

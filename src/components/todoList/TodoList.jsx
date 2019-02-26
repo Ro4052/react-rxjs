@@ -22,7 +22,7 @@ const TodoList = props => (
           editText={props.onEditTodoText}
         />
       ))}
-      {props.todos.filter(todo => todo.get("complete")).length > 0 && (
+      {props.todos.filter(todo => todo.get("complete")).size > 0 && (
         <List.Item>
           <Popup
             position="left center"
