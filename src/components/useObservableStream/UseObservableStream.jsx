@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export default (
-  observable,
-  stateMap,
-  triggers
-) => WrappedComponent => props => {
+export default (observable, stateMap) => {
   const [state, setState] = useState(stateMap ? stateMap({}) : {});
 
   useEffect(() => {
@@ -16,5 +12,5 @@ export default (
     };
   });
 
-  return <WrappedComponent {...props} {...state} {...triggers} />;
+  return { ...state };
 };
