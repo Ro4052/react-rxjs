@@ -12,5 +12,5 @@ export default (observable, stateMap) => {
     };
   });
 
-  return { ...state };
+  return state;
 };
