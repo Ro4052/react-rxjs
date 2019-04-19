@@ -1,5 +1,5 @@
 import React, { memo, forwardRef, lazy, Suspense } from "react";
-import { List, Icon, Loader } from "semantic-ui-react";
+import { List, Popup, Icon, Loader } from "semantic-ui-react";
 import cx from "classnames";
 
 import styles from "./TodoItemDisp.module.css";
@@ -31,19 +31,33 @@ export default memo(
             {props.todo.get("text")}
           </span>
           <div className={styles.actionIcons}>
-            <Icon
-              link
-              name={
-                props.todo.get("complete") ? "undo alternate" : "check circle"
+            <Popup
+              position="left center"
+              trigger={
+                <Icon
+                  link
+                  name={
+                    props.todo.get("complete")
+                      ? "undo alternate"
+                      : "check circle"
+                  }
+                  color={props.todo.get("complete") ? "red" : "green"}
+                  onClick={() => props.toggleComplete(props.todo.get("id"))}
+                />
               }
-              color={props.todo.get("complete") ? "red" : "green"}
-              onClick={() => props.toggleComplete(props.todo.get("id"))}
+              content={props.todo.get("complete") ? "Revert" : "Complete"}
             />
-            <Icon
-              link
-              name="close"
-              color="red"
-              onClick={() => props.delete(props.todo.get("id"))}
+            <Popup
+              position="right center"
+              trigger={
+                <Icon
+                  link
+                  name="close"
+                  color="red"
+                  onClick={() => props.delete(props.todo.get("id"))}
+                />
+              }
+              content="Delete"
             />
           </div>
         </>
