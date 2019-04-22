@@ -16,7 +16,7 @@ const TodoList = () => {
   return (
     <>
       <TodoFilters />
-      <List divided relaxed className={styles.list}>
+      <List divided relaxed className={styles.todoList}>
         {todos.map(todo => (
           <TodoItem
             key={todo.get("id")}
@@ -26,24 +26,24 @@ const TodoList = () => {
             editText={todoService.onEditTodoText}
           />
         ))}
-        {todos.filter(todo => todo.get("complete")).size > 0 && (
-          <List.Item>
-            <Popup
-              position="left center"
-              trigger={
-                <Icon
-                  link
-                  className={styles.deleteCompleted}
-                  name="trash alternate"
-                  color="red"
-                  onClick={todoService.onDeleteCompleted}
-                />
-              }
-              content="Delete Completed"
-            />
-          </List.Item>
-        )}
       </List>
+      {todos.filter(todo => todo.get("complete")).size > 0 && (
+        <div className={styles.deleteCompleted}>
+          <Popup
+            position="left center"
+            trigger={
+              <Icon
+                link
+                className={styles.deleteCompleted}
+                name="trash alternate"
+                color="red"
+                onClick={todoService.onDeleteCompleted}
+              />
+            }
+            content="Delete Completed"
+          />
+        </div>
+      )}
       <TextInput
         action="Create"
         placeholder="Type here..."
