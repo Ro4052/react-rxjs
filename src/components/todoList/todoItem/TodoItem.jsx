@@ -39,6 +39,7 @@ export default memo(props => {
   return (
     <TodoItemDisp
       ref={textInput}
+      index={props.index}
       todo={props.todo}
       editMode={editMode}
       setEditMode={setEditMode}

@@ -1,9 +1,21 @@
 import React, { memo, forwardRef, lazy, Suspense } from "react";
 import { List, Popup, Icon, Loader } from "semantic-ui-react";
+import { sortableElement, sortableHandle } from "react-sortable-hoc";
 import cx from "classnames";
 
 import styles from "./TodoItemDisp.module.css";
 const TextInput = lazy(() => import("../../textInput/TextInput"));
+
+const DragHandle = sortableHandle(() => <Icon name="grab" />);
+const SortableItem = sortableElement(({ todo, content }) => (
+  <List.Item
+    className={cx(styles.todoItem, {
+      [styles.completedTodo]: todo.get("complete")
+    })}
+  >
+    {content}
+  </List.Item>
+));
 
 export default memo(
   forwardRef((props, textInput) => {
@@ -28,6 +40,7 @@ export default memo(
               !props.todo.get("complete") && props.setEditMode(true)
             }
           >
+            <DragHandle />
             {props.todo.get("text")}
           </span>
           <div className={styles.actionIcons}>
@@ -63,16 +76,7 @@ export default memo(
         </>
       );
     return (
-      <List.Item
-        className={cx({ [styles.completedTodo]: props.todo.get("complete") })}
-        icon={
-          <Icon
-            name="sticky note outline"
-            color={props.todo.get("complete") ? "green" : "black"}
-          />
-        }
-        content={content}
-      />
+      <SortableItem index={props.index} todo={props.todo} content={content} />
     );
   })
 );

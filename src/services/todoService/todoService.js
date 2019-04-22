@@ -1,6 +1,7 @@
 import { List, Map } from "immutable";
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
+import arrayMove from "array-move";
 
 import { getStoredTodos, updateLocalStorage } from "./todoLocalStorage";
 import { applyFilter } from "./todoFilter";
@@ -12,6 +13,14 @@ const _todos$ = new BehaviorSubject({
 const todos$ = _todos$.pipe(map(state => applyFilter(state)));
 
 export const getTodoStream = () => todos$;
+
+export const onReorderTodos = ({ oldIndex, newIndex }) => {
+  const todos = arrayMove(_todos$.value.todos.toArray(), oldIndex, newIndex);
+  _todos$.next({
+    todos: List(todos)
+  });
+  updateLocalStorage(nextId, _todos$.value.todos);
+};
 
 export const onSubmitTodo = todoText => {
   _todos$.next({
