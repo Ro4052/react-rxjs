@@ -6,7 +6,9 @@ import cx from "classnames";
 import styles from "./TodoItemDisp.module.css";
 const TextInput = lazy(() => import("../../textInput/TextInput"));
 
-const DragHandle = sortableHandle(() => <Icon name="grab" />);
+const DragHandle = sortableHandle(() => (
+  <Icon className={styles.dragIcon} name="grab" />
+));
 const SortableItem = sortableElement(({ todo, content }) => (
   <List.Item
     className={cx(styles.todoItem, {
