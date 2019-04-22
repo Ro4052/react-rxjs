@@ -22,7 +22,11 @@ const TodoList = () => {
   return (
     <>
       <TodoFilters />
-      <SortableContainer onSortEnd={todoService.onReorderTodos} useDragHandle>
+      <SortableContainer
+        onSortEnd={todoService.onReorderTodos}
+        useDragHandle
+        lockAxis="y"
+      >
         {todos.map((todo, i) => (
           <TodoItem
             key={todo.get("id")}
