@@ -3,12 +3,12 @@ import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import arrayMove from "array-move";
 
-import { getStoredTodos, updateLocalStorage } from "./todoLocalStorage";
+import * as todoStore from "./todoLocalStorage";
 import { applyFilter } from "./todoFilter";
 
-let nextId = localStorage.getItem("nextId") || 0;
+let nextId = todoStore.getNextId() || 0;
 const _todos$ = new BehaviorSubject({
-  todos: getStoredTodos()
+  todos: todoStore.getTodos()
 });
 const todos$ = _todos$.pipe(map(state => applyFilter(state)));
 
@@ -19,7 +19,7 @@ export const onReorderTodos = ({ oldIndex, newIndex }) => {
   _todos$.next({
     todos: List(todos)
   });
-  updateLocalStorage(nextId, _todos$.value.todos);
+  todoStore.updateTodos(_todos$.value.todos);
 };
 
 export const onSubmitTodo = todoText => {
@@ -29,21 +29,22 @@ export const onSubmitTodo = todoText => {
       Map({ id: nextId++, text: todoText, complete: false })
     ])
   });
-  updateLocalStorage(nextId, _todos$.value.todos);
+  todoStore.updateNextId(nextId);
+  todoStore.updateTodos(_todos$.value.todos);
 };
 
 export const onDeleteTodo = todoId => {
   _todos$.next({
     todos: _todos$.value.todos.filter(todo => todo.get("id") !== todoId)
   });
-  updateLocalStorage(nextId, _todos$.value.todos);
+  todoStore.updateTodos(_todos$.value.todos);
 };
 
 export const onDeleteCompleted = () => {
   _todos$.next({
     todos: _todos$.value.todos.filter(todo => !todo.get("complete"))
   });
-  updateLocalStorage(nextId, _todos$.value.todos);
+  todoStore.updateTodos(_todos$.value.todos);
 };
 
 export const onEditTodoText = (todoId, todoText) => {
@@ -61,5 +62,5 @@ function updateTodo(todoId, callback) {
     callback
   );
   _todos$.next({ todos: updatedTodos });
-  updateLocalStorage(nextId, _todos$.value.todos);
+  todoStore.updateTodos(_todos$.value.todos);
 }
