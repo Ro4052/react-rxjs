@@ -51,7 +51,7 @@ const TodoList = () => {
       {todos.filter(todo => todo.get("complete")).size > 0 && (
         <div className={styles.deleteCompleted}>
           <Popup
-            position="left center"
+            position="right center"
             disabled={!showPopups}
             trigger={
               <Icon
