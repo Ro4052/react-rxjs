@@ -14,10 +14,10 @@ const BottomBar = ({ todos, allowPopups }) => {
   return (
     <div className={styles.bottomBar}>
       <Label className={cx({ [styles.active]: numActive > 0 })}>
-        Active: {numActive}
+        Active <Label.Detail>{numActive}</Label.Detail>
       </Label>
       <Label className={cx({ [styles.complete]: numComplete > 0 })}>
-        Complete: {numComplete}
+        Complete <Label.Detail>{numComplete}</Label.Detail>
       </Label>
       {todos.filter(todo => todo.get("complete")).size > 0 && (
         <Popup
