@@ -37,7 +37,6 @@ const TodoList = () => {
         onSortEnd={todoService.onReorderTodos}
         useDragHandle
         lockAxis="y"
-        lockToContainerEdges={true}
       >
         {todos.map((todo, i) => (
           <TodoItem
