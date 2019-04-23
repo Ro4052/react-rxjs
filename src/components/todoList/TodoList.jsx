@@ -12,9 +12,7 @@ import TextInput from "../textInput/TextInput";
 
 const stateMap = state => ({ todos: state.todos || ImmutableList([]) });
 const SortableContainer = sortableContainer(({ children }) => (
-  <List divided relaxed>
-    {children}
-  </List>
+  <List relaxed>{children}</List>
 ));
 
 const TodoList = () => {
