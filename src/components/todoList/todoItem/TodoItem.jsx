@@ -7,7 +7,7 @@ export default memo(props => {
   const textInput = useRef(null);
 
   const pageClick = useRef(event => {
-    if (!textInput.current.contains(event.target)) {
+    if (textInput.current && !textInput.current.contains(event.target)) {
       setEditMode(false);
     }
   });
