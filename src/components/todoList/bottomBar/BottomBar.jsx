@@ -1,6 +1,5 @@
 import React from "react";
 import { Label, Popup, Icon } from "semantic-ui-react";
-import cx from "classnames";
 
 import {
   getActiveNumber,
@@ -13,10 +12,10 @@ const BottomBar = ({ todos, allowPopups }) => {
 
   return (
     <div className={styles.bottomBar}>
-      <Label className={cx({ [styles.active]: numActive > 0 })}>
+      <Label basic color={numActive > 0 ? "red" : "grey"} size="tiny">
         Active <Label.Detail>{numActive}</Label.Detail>
       </Label>
-      <Label className={cx({ [styles.complete]: numComplete > 0 })}>
+      <Label basic color={numComplete > 0 ? "green" : "grey"} size="tiny">
         Complete <Label.Detail>{numComplete}</Label.Detail>
       </Label>
       {todos.filter(todo => todo.get("complete")).size > 0 && (
