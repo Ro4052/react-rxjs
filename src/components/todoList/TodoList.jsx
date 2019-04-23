@@ -17,7 +17,11 @@ const SortableContainer = sortableContainer(({ children }) => (
 
 const TodoList = () => {
   const { todos } = useObservableStream(todoService.getTodoStream(), stateMap);
-  const [allowPopups, setAllowPopups] = useState(true);
+
+  const localStorePopups = localStorage.getItem("allowPopups");
+  const [allowPopups, setAllowPopups] = useState(
+    localStorePopups !== null && localStorePopups !== "false"
+  );
 
   return (
     <>
@@ -25,7 +29,10 @@ const TodoList = () => {
         toggle
         label="Allow Popups"
         checked={allowPopups}
-        onChange={(_, { checked }) => setAllowPopups(checked)}
+        onChange={(_, { checked }) => {
+          setAllowPopups(checked);
+          localStorage.setItem("allowPopups", checked);
+        }}
       />
       <TodoFilters />
       <SortableContainer
