@@ -12,7 +12,7 @@ import styles from "./TodoList.module.css";
 
 const stateMap = state => ({ todos: state.todos || ImmutableList([]) });
 const SortableContainer = sortableContainer(({ children }) => (
-  <List divided relaxed className={styles.todoList}>
+  <List divided relaxed>
     {children}
   </List>
 ));
