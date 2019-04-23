@@ -48,6 +48,7 @@ export default memo(
           <div className={styles.actionIcons}>
             <Popup
               position="left center"
+              disabled={!props.showPopups}
               trigger={
                 <Icon
                   link
@@ -64,6 +65,7 @@ export default memo(
             />
             <Popup
               position="right center"
+              disabled={!props.showPopups}
               trigger={
                 <Icon
                   link

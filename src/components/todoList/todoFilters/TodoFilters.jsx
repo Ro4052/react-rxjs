@@ -2,6 +2,7 @@ import React from "react";
 import { Dropdown } from "semantic-ui-react";
 
 import { onChangeFilter } from "../../../services/todoService";
+import styles from "./TodoFilters.module.css";
 
 const TodoFilters = () => {
   const options = [
@@ -13,6 +14,7 @@ const TodoFilters = () => {
     <Dropdown
       fluid
       selection
+      className={styles.filters}
       options={options}
       defaultValue="all"
       onChange={(_, { value }) => onChangeFilter(value)}

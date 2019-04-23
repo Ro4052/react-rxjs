@@ -46,6 +46,7 @@ export default memo(props => {
       delete={props.delete}
       toggleComplete={props.toggleComplete}
       onSubmit={handleSubmit}
+      showPopups={props.showPopups}
     />
   );
 });

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { List as ImmutableList } from "immutable";
-import { List, Popup, Icon } from "semantic-ui-react";
+import { Checkbox, List, Popup, Icon } from "semantic-ui-react";
 import { sortableContainer } from "react-sortable-hoc";
 
 import useObservableStream from "../useObservableStream/UseObservableStream";
@@ -19,8 +19,16 @@ const SortableContainer = sortableContainer(({ children }) => (
 
 const TodoList = () => {
   const { todos } = useObservableStream(todoService.getTodoStream(), stateMap);
+  const [showPopups, setShowPopups] = useState(true);
+
   return (
     <>
+      <Checkbox
+        toggle
+        label="Show Popups"
+        checked={showPopups}
+        onChange={(_, { checked }) => setShowPopups(checked)}
+      />
       <TodoFilters />
       <SortableContainer
         onSortEnd={todoService.onReorderTodos}
@@ -36,6 +44,7 @@ const TodoList = () => {
             delete={todoService.onDeleteTodo}
             toggleComplete={todoService.onToggleComplete}
             editText={todoService.onEditTodoText}
+            showPopups={showPopups}
           />
         ))}
       </SortableContainer>
@@ -43,6 +52,7 @@ const TodoList = () => {
         <div className={styles.deleteCompleted}>
           <Popup
             position="left center"
+            disabled={!showPopups}
             trigger={
               <Icon
                 link
