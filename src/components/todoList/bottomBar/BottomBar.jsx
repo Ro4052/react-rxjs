@@ -12,10 +12,10 @@ const BottomBar = ({ todos, allowPopups }) => {
 
   return (
     <div className={styles.bottomBar}>
-      <Label basic color={numActive > 0 ? "red" : "grey"} size="tiny">
+      <Label basic color={numActive > 0 ? "red" : "grey"} size="mini">
         Active <Label.Detail>{numActive}</Label.Detail>
       </Label>
-      <Label basic color={numComplete > 0 ? "green" : "grey"} size="tiny">
+      <Label basic color={numComplete > 0 ? "green" : "grey"} size="mini">
         Complete <Label.Detail>{numComplete}</Label.Detail>
       </Label>
       {todos.filter(todo => todo.get("complete")).size > 0 && (
