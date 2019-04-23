@@ -19,9 +19,7 @@ const TodoList = () => {
   const { todos } = useObservableStream(todoService.getTodoStream(), stateMap);
 
   const localStorePopups = localStorage.getItem("allowPopups");
-  const [allowPopups, setAllowPopups] = useState(
-    localStorePopups !== null ? localStorePopups !== "false" : true
-  );
+  const [allowPopups, setAllowPopups] = useState(localStorePopups !== "false");
 
   return (
     <>
