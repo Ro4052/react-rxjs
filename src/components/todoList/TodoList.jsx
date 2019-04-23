@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { List as ImmutableList } from "immutable";
-import { Checkbox, List } from "semantic-ui-react";
+import { Checkbox, Message, Icon, List } from "semantic-ui-react";
 import { sortableContainer } from "react-sortable-hoc";
 
 import useObservableStream from "../useObservableStream/UseObservableStream";
@@ -33,6 +33,12 @@ const TodoList = () => {
         }}
       />
       <TodoFilters />
+      {todos.size === 0 && (
+        <Message icon success>
+          <Icon name="smile outline" />
+          <Message.Content>You're all done...</Message.Content>
+        </Message>
+      )}
       <SortableContainer
         onSortEnd={todoService.onReorderTodos}
         useDragHandle
