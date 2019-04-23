@@ -1,0 +1,18 @@
+.bottomBar {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+.active {
+  color: #ffffff !important;
+  background-color: #db2828 !important;
+}
+
+.complete {
+  color: #ffffff !important;
+  background-color: #21ba45 !important;
+}
+
+.deleteCompleted {
+  float: right;
+}

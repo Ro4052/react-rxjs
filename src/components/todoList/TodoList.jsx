@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { List as ImmutableList } from "immutable";
-import { Checkbox, List, Popup, Icon } from "semantic-ui-react";
+import { Checkbox, List } from "semantic-ui-react";
 import { sortableContainer } from "react-sortable-hoc";
 
 import useObservableStream from "../useObservableStream/UseObservableStream";
 import * as todoService from "../../services/todoService";
 import TodoFilters from "./todoFilters/TodoFilters";
 import TodoItem from "./todoItem/TodoItem";
+import BottomBar from "./bottomBar/BottomBar";
 import TextInput from "../textInput/TextInput";
-import styles from "./TodoList.module.css";
 
 const stateMap = state => ({ todos: state.todos || ImmutableList([]) });
 const SortableContainer = sortableContainer(({ children }) => (
@@ -48,24 +48,7 @@ const TodoList = () => {
           />
         ))}
       </SortableContainer>
-      {todos.filter(todo => todo.get("complete")).size > 0 && (
-        <div className={styles.deleteCompleted}>
-          <Popup
-            position="right center"
-            disabled={!allowPopups}
-            trigger={
-              <Icon
-                link
-                className={styles.deleteCompleted}
-                name="trash alternate"
-                color="red"
-                onClick={todoService.onDeleteCompleted}
-              />
-            }
-            content="Delete Completed"
-          />
-        </div>
-      )}
+      <BottomBar todos={todos} allowPopups={allowPopups} />
       <TextInput
         action="Create"
         placeholder="Type here..."

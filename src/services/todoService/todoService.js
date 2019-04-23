@@ -14,6 +14,14 @@ const todos$ = _todos$.pipe(map(state => applyFilter(state)));
 
 export const getTodoStream = () => todos$;
 
+export const getActiveNumber = () => {
+  const numComplete = _todos$.value.todos.filter(todo => todo.get("complete"))
+    .size;
+  const numActive = _todos$.value.todos.size - numComplete;
+
+  return [numActive, numComplete];
+};
+
 export const onReorderTodos = ({ oldIndex, newIndex }) => {
   const todos = arrayMove(_todos$.value.todos.toArray(), oldIndex, newIndex);
   _todos$.next({
