@@ -4,7 +4,7 @@ import { sortableElement, sortableHandle } from "react-sortable-hoc";
 import cx from "classnames";
 
 import styles from "./TodoItemDisp.module.css";
-const TextInput = lazy(() => import("../../textInput/TextInput"));
+const TextInput = lazy(() => import("../../../textInput/TextInput"));
 
 const DragHandle = sortableHandle(() => (
   <Icon className={styles.dragIcon} name="sticky note outline" />

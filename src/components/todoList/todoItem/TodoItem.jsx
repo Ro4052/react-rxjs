@@ -1,6 +1,6 @@
 import React, { memo, useState, useRef } from "react";
 
-import TodoItemDisp from "../todoItemDisp/TodoItemDisp";
+import TodoItemDisp from "./todoItemDisp/TodoItemDisp";
 
 export default memo(props => {
   const [editMode, _setEditMode] = useState(false);
