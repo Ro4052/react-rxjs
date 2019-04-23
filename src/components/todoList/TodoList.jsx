@@ -19,15 +19,15 @@ const SortableContainer = sortableContainer(({ children }) => (
 
 const TodoList = () => {
   const { todos } = useObservableStream(todoService.getTodoStream(), stateMap);
-  const [showPopups, setShowPopups] = useState(true);
+  const [allowPopups, setAllowPopups] = useState(true);
 
   return (
     <>
       <Checkbox
         toggle
-        label="Show Popups"
-        checked={showPopups}
-        onChange={(_, { checked }) => setShowPopups(checked)}
+        label="Allow Popups"
+        checked={allowPopups}
+        onChange={(_, { checked }) => setAllowPopups(checked)}
       />
       <TodoFilters />
       <SortableContainer
@@ -44,7 +44,7 @@ const TodoList = () => {
             delete={todoService.onDeleteTodo}
             toggleComplete={todoService.onToggleComplete}
             editText={todoService.onEditTodoText}
-            showPopups={showPopups}
+            allowPopups={allowPopups}
           />
         ))}
       </SortableContainer>
@@ -52,7 +52,7 @@ const TodoList = () => {
         <div className={styles.deleteCompleted}>
           <Popup
             position="right center"
-            disabled={!showPopups}
+            disabled={!allowPopups}
             trigger={
               <Icon
                 link
