@@ -20,7 +20,7 @@ const TodoList = () => {
 
   const localStorePopups = localStorage.getItem("allowPopups");
   const [allowPopups, setAllowPopups] = useState(
-    localStorePopups !== null && localStorePopups !== "false"
+    localStorePopups !== null ? localStorePopups !== "false" : true
   );
 
   return (
