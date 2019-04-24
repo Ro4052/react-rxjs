@@ -33,14 +33,18 @@ export default memo(
           </Suspense>
         </div>
       ) : (
-        <div
-          className={cx({
-            [styles.todoSpan]: !props.todo.get("complete")
-          })}
-          onClick={() => !props.todo.get("complete") && props.setEditMode(true)}
-        >
+        <div className={styles.todoItem}>
           <DragHandle />
-          {props.todo.get("text")}
+          <div
+            className={cx({
+              [styles.activeTodo]: !props.todo.get("complete")
+            })}
+            onClick={() =>
+              !props.todo.get("complete") && props.setEditMode(true)
+            }
+          >
+            {props.todo.get("text")}
+          </div>
           <div className={styles.actionIcons}>
             <Popup
               position="left center"
@@ -75,6 +79,7 @@ export default memo(
           </div>
         </div>
       );
+
     return (
       <SortableItem index={props.index} todo={props.todo} content={content} />
     );
