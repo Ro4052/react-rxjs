@@ -6,9 +6,12 @@
   width: 100%;
 }
 
+.todoItem {
+  width: 100%;
+}
+
 .activeTodo {
   cursor: url(./pencil_cursor.png) 0 20, pointer;
-  width: 100%;
 }
 
 .dragIcon {
@@ -17,8 +20,4 @@
 
 .completedTodo {
   color: rgba(0, 0, 0, 0.3);
-}
-
-.actionIcons {
-  float: right;
 }

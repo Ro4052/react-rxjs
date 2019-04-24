@@ -1,8 +1,9 @@
 import React, { memo, forwardRef, lazy, Suspense } from "react";
-import { List, Popup, Icon, Loader } from "semantic-ui-react";
+import { List, Icon, Loader } from "semantic-ui-react";
 import { sortableElement, sortableHandle } from "react-sortable-hoc";
 import cx from "classnames";
 
+import ActionItems from "../actionItems/ActionItems";
 import styles from "./TodoItemDisp.module.css";
 const TextInput = lazy(() => import("../../../textInput/TextInput"));
 
@@ -36,7 +37,7 @@ export default memo(
         <div className={styles.todoItem}>
           <DragHandle />
           <div
-            className={cx({
+            className={cx(styles.todoItem, {
               [styles.activeTodo]: !props.todo.get("complete")
             })}
             onClick={() =>
@@ -45,38 +46,12 @@ export default memo(
           >
             {props.todo.get("text")}
           </div>
-          <div className={styles.actionIcons}>
-            <Popup
-              position="left center"
-              disabled={!props.allowPopups}
-              trigger={
-                <Icon
-                  link
-                  name={
-                    props.todo.get("complete")
-                      ? "undo alternate"
-                      : "check circle"
-                  }
-                  color={props.todo.get("complete") ? "red" : "green"}
-                  onClick={() => props.toggleComplete(props.todo.get("id"))}
-                />
-              }
-              content={props.todo.get("complete") ? "Revert" : "Complete"}
-            />
-            <Popup
-              position="right center"
-              disabled={!props.allowPopups}
-              trigger={
-                <Icon
-                  link
-                  name="close"
-                  color="red"
-                  onClick={() => props.delete(props.todo.get("id"))}
-                />
-              }
-              content="Delete"
-            />
-          </div>
+          <ActionItems
+            todo={props.todo}
+            toggleComplete={props.toggleComplete}
+            delete={props.delete}
+            allowPopups={props.allowPopups}
+          />
         </div>
       );
 
