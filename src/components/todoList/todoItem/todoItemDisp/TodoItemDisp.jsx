@@ -3,12 +3,16 @@ import { List, Icon, Loader } from "semantic-ui-react";
 import { sortableElement, sortableHandle } from "react-sortable-hoc";
 import cx from "classnames";
 
+import { isFiltered } from "../../../../services/todoService";
 import ActionItems from "../actionItems/ActionItems";
 import styles from "./TodoItemDisp.module.css";
 const TextInput = lazy(() => import("../../../textInput/TextInput"));
 
-const DragHandle = sortableHandle(() => (
-  <Icon className={styles.dragIcon} name="sticky note outline" />
+const DragHandle = sortableHandle(({ disabled }) => (
+  <Icon
+    className={cx({ [styles.dragIcon]: !disabled })}
+    name="sticky note outline"
+  />
 ));
 const SortableItem = sortableElement(({ todo, content }) => (
   <List.Item
@@ -22,6 +26,7 @@ const SortableItem = sortableElement(({ todo, content }) => (
 
 export default memo(
   forwardRef((props, textInput) => {
+    const filtered = isFiltered();
     const content =
       props.editMode && !props.todo.get("complete") ? (
         <div ref={textInput}>
@@ -35,7 +40,7 @@ export default memo(
         </div>
       ) : (
         <div className={styles.todoItem}>
-          <DragHandle />
+          <DragHandle disabled={filtered} />
           <div
             className={cx(styles.todoItem, {
               [styles.activeTodo]: !props.todo.get("complete")
@@ -56,7 +61,12 @@ export default memo(
       );
 
     return (
-      <SortableItem index={props.index} todo={props.todo} content={content} />
+      <SortableItem
+        index={props.index}
+        disabled={filtered}
+        todo={props.todo}
+        content={content}
+      />
     );
   })
 );

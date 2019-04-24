@@ -29,5 +29,7 @@ export const applyFilter = state => {
   }
 };
 
+export const isFiltered = () => currentFilter !== filterStates.get("all");
+
 export const changeFilter = newFilter =>
   (currentFilter = filterStates.get(newFilter));
