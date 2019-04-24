@@ -1,9 +1,9 @@
 .todoSpan {
-  cursor: pointer;
+  cursor: url(./pencil_cursor.png) 0 30, pointer;
 }
 
 .dragIcon {
-  cursor: move;
+  cursor: n-resize;
 }
 
 .completedTodo {
