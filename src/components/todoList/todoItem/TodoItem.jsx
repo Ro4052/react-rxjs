@@ -1,8 +1,8 @@
-import React, { memo, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import TodoItemDisp from "./todoItemDisp/TodoItemDisp";
 
-export default memo(props => {
+export default props => {
   const [editMode, _setEditMode] = useState(false);
   const textInput = useRef(null);
 
@@ -49,4 +49,4 @@ export default memo(props => {
       allowPopups={props.allowPopups}
     />
   );
-});
+};

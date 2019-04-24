@@ -1,4 +1,4 @@
-import React, { memo, forwardRef, lazy, Suspense } from "react";
+import React, { forwardRef, lazy, Suspense } from "react";
 import { List, Icon, Loader } from "semantic-ui-react";
 import { sortableElement, sortableHandle } from "react-sortable-hoc";
 import cx from "classnames";
@@ -24,49 +24,45 @@ const SortableItem = sortableElement(({ todo, content }) => (
   </List.Item>
 ));
 
-export default memo(
-  forwardRef((props, textInput) => {
-    const filtered = isFiltered();
-    const content =
-      props.editMode && !props.todo.get("complete") ? (
-        <div ref={textInput}>
-          <Suspense fallback={<Loader />}>
-            <TextInput
-              placeholder="Type here..."
-              initialText={props.todo.get("text")}
-              submit={props.onSubmit}
-            />
-          </Suspense>
-        </div>
-      ) : (
-        <div className={styles.todoItem}>
-          <DragHandle disabled={filtered} />
-          <div
-            className={cx(styles.todoItem, {
-              [styles.activeTodo]: !props.todo.get("complete")
-            })}
-            onClick={() =>
-              !props.todo.get("complete") && props.setEditMode(true)
-            }
-          >
-            {props.todo.get("text")}
-          </div>
-          <ActionItems
-            todo={props.todo}
-            toggleComplete={props.toggleComplete}
-            delete={props.delete}
-            allowPopups={props.allowPopups}
+export default forwardRef((props, textInput) => {
+  const filtered = isFiltered();
+  const content =
+    props.editMode && !props.todo.get("complete") ? (
+      <div ref={textInput}>
+        <Suspense fallback={<Loader />}>
+          <TextInput
+            placeholder="Type here..."
+            initialText={props.todo.get("text")}
+            submit={props.onSubmit}
           />
+        </Suspense>
+      </div>
+    ) : (
+      <div className={styles.todoItem}>
+        <DragHandle disabled={filtered} />
+        <div
+          className={cx(styles.todoItem, {
+            [styles.activeTodo]: !props.todo.get("complete")
+          })}
+          onClick={() => !props.todo.get("complete") && props.setEditMode(true)}
+        >
+          {props.todo.get("text")}
         </div>
-      );
-
-    return (
-      <SortableItem
-        index={props.index}
-        disabled={filtered}
-        todo={props.todo}
-        content={content}
-      />
+        <ActionItems
+          todo={props.todo}
+          toggleComplete={props.toggleComplete}
+          delete={props.delete}
+          allowPopups={props.allowPopups}
+        />
+      </div>
     );
-  })
-);
+
+  return (
+    <SortableItem
+      index={props.index}
+      disabled={filtered}
+      todo={props.todo}
+      content={content}
+    />
+  );
+});
