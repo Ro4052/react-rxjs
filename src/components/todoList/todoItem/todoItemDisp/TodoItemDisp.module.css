@@ -1,5 +1,5 @@
 .todoSpan {
-  cursor: url(./pencil_cursor.png) 0 30, pointer;
+  cursor: url(./pencil_cursor.png) 0 20, pointer;
 }
 
 .dragIcon {
