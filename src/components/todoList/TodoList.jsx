@@ -17,6 +17,7 @@ const SortableContainer = sortableContainer(({ children }) => (
 
 const TodoList = () => {
   const { todos } = useObservableStream(todoService.getTodoStream(), stateMap);
+  const [numActive, numComplete] = todoService.getActiveNumber();
 
   const localStorePopups = localStorage.getItem("allowPopups");
   const [allowPopups, setAllowPopups] = useState(localStorePopups !== "false");
@@ -33,7 +34,7 @@ const TodoList = () => {
         }}
       />
       <TodoFilters />
-      {todos.size === 0 && (
+      {numActive === 0 && numComplete === 0 && (
         <Message icon success>
           <Icon name="smile outline" />
           <Message.Content>You're all done...</Message.Content>
@@ -56,7 +57,12 @@ const TodoList = () => {
           />
         ))}
       </SortableContainer>
-      <BottomBar todos={todos} allowPopups={allowPopups} />
+      <BottomBar
+        todos={todos}
+        allowPopups={allowPopups}
+        numActive={numActive}
+        numComplete={numComplete}
+      />
       <TextInput
         action="Create"
         placeholder="Type here..."
