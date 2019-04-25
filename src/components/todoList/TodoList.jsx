@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { List as ImmutableList } from "immutable";
 import { Checkbox, Message, Icon, List } from "semantic-ui-react";
 import { sortableContainer } from "react-sortable-hoc";
 
 import useObservableStream from "../useObservableStream/UseObservableStream";
+import useContainerPatch from "../useContainerPatch/UseContainerPatch";
 import * as todoService from "../../services/todoService";
 import TodoFilters from "./todoFilters/TodoFilters";
 import TodoItem from "./todoItem/TodoItem";
@@ -21,6 +22,12 @@ const TodoList = () => {
 
   const localStorePopups = localStorage.getItem("allowPopups");
   const [allowPopups, setAllowPopups] = useState(localStorePopups !== "false");
+
+  const container = useRef();
+  const [onStart, onMove, onEnd] = useContainerPatch(
+    container,
+    ({ oldIndex, newIndex }) => todoService.onReorderTodos(oldIndex, newIndex)
+  );
 
   return (
     <>
@@ -41,9 +48,13 @@ const TodoList = () => {
         </Message>
       )}
       <SortableContainer
-        onSortEnd={todoService.onReorderTodos}
+        ref={container}
         useDragHandle
+        lockToContainerEdges
         lockAxis="y"
+        onSortStart={onStart}
+        onSortMove={onMove}
+        onSortEnd={onEnd}
       >
         {todos.map((todo, i) => (
           <TodoItem

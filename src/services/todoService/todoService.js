@@ -22,7 +22,7 @@ export const getActiveNumber = () => {
   return [numActive, numComplete];
 };
 
-export const onReorderTodos = ({ oldIndex, newIndex }) => {
+export const onReorderTodos = (oldIndex, newIndex) => {
   const todos = arrayMove(_todos$.value.todos.toArray(), oldIndex, newIndex);
   _todos$.next({
     todos: List(todos)
