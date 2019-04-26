@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export default (container, userOnStart) => {
+export default (container, userOnEnd) => {
   const [helperTop, setHelperTop] = useState(null);
 
   const onStart = ({ node }) => setHelperTop(node.getBoundingClientRect().top);
   const onEnd = args => {
     setHelperTop(null);
-    userOnStart(args);
+    userOnEnd(args);
   };
   const onMove = () => {
     if (helperTop !== null) {
