@@ -21,13 +21,11 @@ export default (container, userOnEnd) => {
       } = container.current.helper.getBoundingClientRect();
 
       if (currentTop < containerTop - helperHeight / 2) {
-        container.current.helper.style.transform = `translateY(${containerTop -
-          helperTop -
-          helperHeight / 2}px)`;
+        const translation = containerTop - helperTop - helperHeight / 2;
+        container.current.helper.style.transform = `translateY(${translation}px)`;
       } else if (currentBottom > containerBottom + helperHeight / 2) {
-        container.current.helper.style.transform = `translateY(${containerBottom -
-          helperTop -
-          helperHeight / 2}px)`;
+        const translation = containerBottom - helperTop - helperHeight / 2;
+        container.current.helper.style.transform = `translateY(${translation}px)`;
       }
     }
   };
