@@ -50,7 +50,6 @@ const TodoList = () => {
       <SortableContainer
         ref={container}
         useDragHandle
-        lockToContainerEdges
         lockAxis="y"
         onSortStart={onStart}
         onSortMove={onMove}
