@@ -1,21 +1,22 @@
-import { Map } from "immutable";
+import { getFilterState, updateFilterState } from "./todoLocalStorage";
 
-const filterStates = Map({ all: 1, active: 2, completed: 3 });
+const filterStates = { all: "all", active: "active", completed: "completed" };
 
-let currentFilter = filterStates.get("all");
+const savedState = getFilterState();
+let currentFilter = savedState ? savedState : filterStates.all;
 
 export const applyFilter = state => {
   switch (currentFilter) {
-    case filterStates.get("all"): {
+    case filterStates.all: {
       return state;
     }
-    case filterStates.get("active"): {
+    case filterStates.active: {
       return {
         ...state,
         todos: state.todos.filter(todo => !todo.get("complete"))
       };
     }
-    case filterStates.get("completed"): {
+    case filterStates.completed: {
       return {
         ...state,
         todos: state.todos.filter(todo => todo.get("complete"))
@@ -23,13 +24,17 @@ export const applyFilter = state => {
     }
     default: {
       console.error(`Unknown filter state: ${currentFilter}`);
-      currentFilter = filterStates.get("all");
+      changeFilter(filterStates.all);
       return state;
     }
   }
 };
 
-export const isFiltered = () => currentFilter !== filterStates.get("all");
+export const isFiltered = () => currentFilter !== filterStates.all;
 
-export const changeFilter = newFilter =>
-  (currentFilter = filterStates.get(newFilter));
+export const getCurrentFilter = () => currentFilter;
+
+export const changeFilter = newFilter => {
+  currentFilter = newFilter;
+  updateFilterState(currentFilter);
+};

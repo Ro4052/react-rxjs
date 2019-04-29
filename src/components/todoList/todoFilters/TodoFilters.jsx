@@ -1,10 +1,13 @@
-import React, { memo } from "react";
+import React from "react";
 import { Dropdown } from "semantic-ui-react";
 
-import { onChangeFilter } from "../../../services/todoService";
+import {
+  getCurrentFilter,
+  onChangeFilter
+} from "../../../services/todoService";
 import styles from "./TodoFilters.module.css";
 
-const TodoFilters = memo(() => {
+const TodoFilters = () => {
   const options = [
     { text: "All", value: "all", icon: "tasks" },
     { text: "Active", value: "active", icon: "edit outline" },
@@ -16,10 +19,10 @@ const TodoFilters = memo(() => {
       selection
       className={styles.filters}
       options={options}
-      defaultValue="all"
+      defaultValue={getCurrentFilter()}
       onChange={(_, { value }) => onChangeFilter(value)}
     />
   );
-});
+};
 
 export default TodoFilters;
