@@ -1,10 +1,8 @@
 import React, { memo } from "react";
 import { Popup, Icon } from "semantic-ui-react";
 
-import styles from "./ActionItems.module.css";
-
 export default memo(props => (
-  <div className={styles.actionIcons}>
+  <>
     <Popup
       position="left center"
       disabled={!props.allowPopups}
@@ -31,5 +29,5 @@ export default memo(props => (
       }
       content="Delete"
     />
-  </div>
+  </>
 ));

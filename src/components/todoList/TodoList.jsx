@@ -41,32 +41,33 @@ const TodoList = () => {
         }}
       />
       <TodoFilters />
-      {numActive === 0 && numComplete === 0 && (
+      {numActive === 0 && numComplete === 0 ? (
         <Message icon success>
           <Icon name="smile outline" />
           <Message.Content>You're all done...</Message.Content>
         </Message>
+      ) : (
+        <SortableContainer
+          ref={container}
+          useDragHandle
+          lockAxis="y"
+          onSortStart={onStart}
+          onSortMove={onMove}
+          onSortEnd={onEnd}
+        >
+          {todos.map((todo, i) => (
+            <TodoItem
+              key={todo.get("id")}
+              index={i}
+              todo={todo}
+              delete={todoService.onDeleteTodo}
+              toggleComplete={todoService.onToggleComplete}
+              editText={todoService.onEditTodoText}
+              allowPopups={allowPopups}
+            />
+          ))}
+        </SortableContainer>
       )}
-      <SortableContainer
-        ref={container}
-        useDragHandle
-        lockAxis="y"
-        onSortStart={onStart}
-        onSortMove={onMove}
-        onSortEnd={onEnd}
-      >
-        {todos.map((todo, i) => (
-          <TodoItem
-            key={todo.get("id")}
-            index={i}
-            todo={todo}
-            delete={todoService.onDeleteTodo}
-            toggleComplete={todoService.onToggleComplete}
-            editText={todoService.onEditTodoText}
-            allowPopups={allowPopups}
-          />
-        ))}
-      </SortableContainer>
       <BottomBar
         todos={todos}
         allowPopups={allowPopups}

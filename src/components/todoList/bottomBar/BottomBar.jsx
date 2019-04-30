@@ -1,21 +1,21 @@
-import React from "react";
+import React, { memo } from "react";
 import { Label, Popup, Icon } from "semantic-ui-react";
 
 import { onDeleteCompleted } from "../../../services/todoService";
 import styles from "./BottomBar.module.css";
 
-const BottomBar = ({ todos, allowPopups, numActive, numComplete }) => (
+const BottomBar = memo(props => (
   <div className={styles.bottomBar}>
-    <Label basic color={numActive > 0 ? "red" : "grey"} size="mini">
-      Active <Label.Detail>{numActive}</Label.Detail>
+    <Label basic color={props.numActive > 0 ? "red" : "grey"} size="mini">
+      Active <Label.Detail>{props.numActive}</Label.Detail>
     </Label>
-    <Label basic color={numComplete > 0 ? "green" : "grey"} size="mini">
-      Complete <Label.Detail>{numComplete}</Label.Detail>
+    <Label basic color={props.numComplete > 0 ? "green" : "grey"} size="mini">
+      Complete <Label.Detail>{props.numComplete}</Label.Detail>
     </Label>
-    {todos.filter(todo => todo.get("complete")).size > 0 && (
+    {props.todos.filter(todo => todo.get("complete")).size > 0 && (
       <Popup
         position="right center"
-        disabled={!allowPopups}
+        disabled={!props.allowPopups}
         trigger={
           <Icon
             link
@@ -29,6 +29,6 @@ const BottomBar = ({ todos, allowPopups, numActive, numComplete }) => (
       />
     )}
   </div>
-);
+));
 
 export default BottomBar;

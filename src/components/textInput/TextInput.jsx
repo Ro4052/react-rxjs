@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Input } from "semantic-ui-react";
 
-export default props => {
+export default memo(props => {
   const [inputText, setInputText] = useState(props.initialText || "");
 
   function handleChange(event) {
@@ -30,4 +30,4 @@ export default props => {
       />
     </form>
   );
-};
+});

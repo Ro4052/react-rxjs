@@ -11,7 +11,6 @@ export default props => {
       setEditMode(false);
     }
   });
-
   const detectEscape = useRef(event => {
     if (event.keyCode === 27) {
       setEditMode(false);

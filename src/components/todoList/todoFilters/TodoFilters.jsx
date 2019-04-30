@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Dropdown } from "semantic-ui-react";
 
 import {
@@ -7,12 +7,13 @@ import {
 } from "../../../services/todoService";
 import styles from "./TodoFilters.module.css";
 
-const TodoFilters = () => {
+const TodoFilters = memo(() => {
   const options = [
     { text: "All", value: "all", icon: "tasks" },
     { text: "Active", value: "active", icon: "edit outline" },
     { text: "Completed", value: "completed", icon: "check circle" }
   ];
+
   return (
     <Dropdown
       fluid
@@ -23,6 +24,6 @@ const TodoFilters = () => {
       onChange={(_, { value }) => onChangeFilter(value)}
     />
   );
-};
+});
 
 export default TodoFilters;
