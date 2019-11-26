@@ -1,32 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import TodoItemDisp from "./todoItemDisp/TodoItemDisp";
 
 export default props => {
-  const [editMode, _setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const textInput = useRef(null);
 
-  const pageClick = useRef(event => {
-    if (textInput.current && !textInput.current.contains(event.target)) {
-      setEditMode(false);
-    }
-  });
-  const detectEscape = useRef(event => {
-    if (event.keyCode === 27) {
-      setEditMode(false);
-    }
-  });
+  useEffect(() => {
+    const detectClick = event => {
+      if (textInput.current && !textInput.current.contains(event.target)) {
+        setEditMode(false);
+      }
+    };
+    const detectEscape = event => {
+      if (event.keyCode === 27) {
+        setEditMode(false);
+      }
+    };
 
-  function setEditMode(edit) {
-    _setEditMode(edit);
-    if (edit) {
-      document.addEventListener("click", pageClick.current);
-      document.addEventListener("keydown", detectEscape.current);
-    } else {
-      document.removeEventListener("click", pageClick.current);
-      document.removeEventListener("keydown", detectEscape.current);
+    if (editMode) {
+      document.addEventListener("click", detectClick);
+      document.addEventListener("keydown", detectEscape);
     }
-  }
+
+    return () => {
+      document.removeEventListener("click", detectClick);
+      document.removeEventListener("keydown", detectEscape);
+    };
+  }, [editMode]);
 
   function handleSubmit(newText) {
     setEditMode(false);
